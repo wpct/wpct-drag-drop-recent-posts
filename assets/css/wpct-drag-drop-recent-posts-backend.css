@@ -1,0 +1,12 @@
+ul#wpct-sortable li{
+    border: 1px solid #7e8993;
+    padding: 6px 8px;
+    border-radius: 4px;
+    background: #fff;
+    cursor: move;
+    font-size: 14px;
+}
+#wpct-sortable-console,
+p.wpct-elements-order-container{
+	display: none;
+}
