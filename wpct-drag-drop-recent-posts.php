@@ -17,7 +17,7 @@
 // first image featured - full width
 // Google Fonts select
 
-// excerpt limit
+// excerpt limit 
 if ( ! function_exists( 'wpctDragAndDropRecentPostsExcerpt' ) ) {
 	function wpctDragAndDropRecentPostsExcerpt($count){
 	  $excerpt = get_the_excerpt();
