@@ -11,6 +11,12 @@
  * License: GPLv2 or later
  */
 
+// TODO:
+// theme 3
+// posts counter
+// first image featured - full width
+// Google Fonts select
+
 // excerpt limit
 if ( ! function_exists( 'wpctDragAndDropRecentPostsExcerpt' ) ) {
 	function wpctDragAndDropRecentPostsExcerpt($count){
@@ -160,14 +166,14 @@ if(!class_exists('WPCTrecentPosts')){
 			if(isset($setup['elements_order'])){
 				$elements_order = $setup['elements_order'];
 			}
-			$theme = 1;
+			$theme = 0;
 			if(isset($setup['theme'])){
 				$theme = $setup['theme'];
 			}
 			$theme_val = '';
-			if($theme == 2){
+			if($theme == 1){
 				$theme_val = 'wpct-theme-1';
-			} else if ($theme == 3){
+			} else if ($theme == 2){
 				$theme_val = 'wpct-theme-2';
 			}
 			
@@ -481,7 +487,8 @@ if(!class_exists('WPCTrecentPosts')){
 	        	</ol>  
 		        <?php } else if (($navigation_way == 2) && ($counter > ($number_of_columns * $number_of_rows))) { ?>
 		        	<div class="wpct-carousel-navigation-container left-right">
-						<a class="carousel-control left" href="#WPCTrecentPosts-<?php echo $unique_id; ?>" data-slide="prev" ><i class="fa fa-chevron-left fa-2" aria-hidden="true"><span class="sr-only"><?php _e('Previous', 'wpct-drag-drop-recent-posts'); ?></span></i></a>
+		        	
+						<a class="carousel-control left" href="#WPCTrecentPosts-<?php echo $unique_id; ?>" data-slide="prev" <?php if($theme == 2){ echo 'style="left:' . $grid_spacing . 'px;"'; } ?>><i class="fa fa-chevron-left fa-2" aria-hidden="true"><span class="sr-only"><?php _e('Previous', 'wpct-drag-drop-recent-posts'); ?></span></i></a>
 						<a class="carousel-control right" href="#WPCTrecentPosts-<?php echo $unique_id; ?>" data-slide="next" ><i class="fa fa-chevron-right fa-2" aria-hidden="true"><span class="sr-only"><?php _e('Next', 'wpct-drag-drop-recent-posts'); ?></span></i></a>
 					</div>
 		        <?php } else if (($navigation_way == 3) && ($counter > ($number_of_columns * $number_of_rows))) { ?>
@@ -591,7 +598,7 @@ if(!class_exists('WPCTrecentPosts')){
                 'interval' => '5000',
                 'slider_pause' => 'null',
                 'elements_order' => '1234567',
-                'theme' => '1',
+                'theme' => '0',
                 'load_fa' => '1',
                 'load_animate' => '1',
                 'animate_css_effect' => 'fadeInUp',
@@ -856,9 +863,9 @@ if(!class_exists('WPCTrecentPosts')){
             <p>
                 <label for="<?php echo $this->get_field_id('theme'); ?>"><?php _e('Theme', 'wpct-drag-drop-recent-posts'); ?></label>
                 <select name="<?php echo $this->get_field_name('theme'); ?>" id="<?php echo $this->get_field_id('theme'); ?>">
-                    <option value="1"<?php selected( $setup['theme'], '1' ); ?>><?php _e('Default styles', 'wpct-drag-drop-recent-posts'); ?></option>
-                    <option value="2"<?php selected( $setup['theme'], '2' ); ?>><?php _e('Theme 1', 'wpct-drag-drop-recent-posts'); ?></option>
-                    <option value="3"<?php selected( $setup['theme'], '3' ); ?>><?php _e('Theme 2', 'wpct-drag-drop-recent-posts'); ?></option>
+                    <option value="0"<?php selected( $setup['theme'], '0' ); ?>><?php _e('Default styles', 'wpct-drag-drop-recent-posts'); ?></option>
+                    <option value="1"<?php selected( $setup['theme'], '1' ); ?>><?php _e('Theme 1', 'wpct-drag-drop-recent-posts'); ?></option>
+                    <option value="2"<?php selected( $setup['theme'], '2' ); ?>><?php _e('Theme 2', 'wpct-drag-drop-recent-posts'); ?></option>
                 </select>
             </p>
             <p>

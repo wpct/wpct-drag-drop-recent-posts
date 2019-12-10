@@ -65,7 +65,6 @@ Please check out our <strong><a href="https://demo.wp-code-tips.com/wpct-drag-dr
 = 1.2 =
 * Added option to disable Font Awesome
 * Added option to disable Animate CSS
-* Adde option to choose themes or completely disable styles
 * Added option to choose Animate CSS effect
 * Added themes
 
