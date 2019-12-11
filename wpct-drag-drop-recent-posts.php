@@ -175,6 +175,8 @@ if(!class_exists('WPCTrecentPosts')){
 				$theme_val = 'wpct-theme-1';
 			} else if ($theme == 2){
 				$theme_val = 'wpct-theme-2';
+			} else if ($theme == 3){
+			    $theme_val = 'wpct-theme-3';
 			}
 			
 			$load_fa = 1;
@@ -447,8 +449,8 @@ if(!class_exists('WPCTrecentPosts')){
 														                    }
 																		echo '</ul>';
 																		?>
-																	<?php } ?>
 																	</div>
+																<?php } ?>
 															<?php } 
 														}
 													?>
@@ -488,7 +490,7 @@ if(!class_exists('WPCTrecentPosts')){
 		        <?php } else if (($navigation_way == 2) && ($counter > ($number_of_columns * $number_of_rows))) { ?>
 		        	<div class="wpct-carousel-navigation-container left-right">
 		        	
-						<a class="carousel-control left" href="#WPCTrecentPosts-<?php echo $unique_id; ?>" data-slide="prev" <?php if($theme == 2){ echo 'style="left:' . $grid_spacing . 'px;"'; } ?>><i class="fa fa-chevron-left fa-2" aria-hidden="true"><span class="sr-only"><?php _e('Previous', 'wpct-drag-drop-recent-posts'); ?></span></i></a>
+						<a class="carousel-control left" href="#WPCTrecentPosts-<?php echo $unique_id; ?>" data-slide="prev" <?php if($theme == 2 || $theme == 3){ echo 'style="left:' . $grid_spacing . 'px;"'; } ?>><i class="fa fa-chevron-left fa-2" aria-hidden="true"><span class="sr-only"><?php _e('Previous', 'wpct-drag-drop-recent-posts'); ?></span></i></a>
 						<a class="carousel-control right" href="#WPCTrecentPosts-<?php echo $unique_id; ?>" data-slide="next" ><i class="fa fa-chevron-right fa-2" aria-hidden="true"><span class="sr-only"><?php _e('Next', 'wpct-drag-drop-recent-posts'); ?></span></i></a>
 					</div>
 		        <?php } else if (($navigation_way == 3) && ($counter > ($number_of_columns * $number_of_rows))) { ?>
@@ -554,7 +556,7 @@ if(!class_exists('WPCTrecentPosts')){
 						});
 					}
 					
-					if($('#WPCTrecentPosts-<?php echo $unique_id; ?>.wpct-recent-posts-outer').hasClass('wpct-theme-2')){
+					if($('#WPCTrecentPosts-<?php echo $unique_id; ?>.wpct-recent-posts-outer').hasClass('wpct-theme-2') || $('#WPCTrecentPosts-<?php echo $unique_id; ?>.wpct-recent-posts-outer').hasClass('wpct-theme-3')){
 						$('#WPCTrecentPosts-<?php echo $unique_id; ?>.wpct-recent-posts-outer .wpct-thumbnail').each(function() {
 						  $( this ).insertBefore($( this ).parent());
 						  //$( this ).after( "<div>" );
@@ -866,6 +868,7 @@ if(!class_exists('WPCTrecentPosts')){
                     <option value="0"<?php selected( $setup['theme'], '0' ); ?>><?php _e('Default styles', 'wpct-drag-drop-recent-posts'); ?></option>
                     <option value="1"<?php selected( $setup['theme'], '1' ); ?>><?php _e('Theme 1', 'wpct-drag-drop-recent-posts'); ?></option>
                     <option value="2"<?php selected( $setup['theme'], '2' ); ?>><?php _e('Theme 2', 'wpct-drag-drop-recent-posts'); ?></option>
+                    <option value="3"<?php selected( $setup['theme'], '3' ); ?>><?php _e('Theme 3', 'wpct-drag-drop-recent-posts'); ?></option>
                 </select>
             </p>
             <p>
@@ -1041,6 +1044,13 @@ if ( ! function_exists( 'wpctDragAndDropRecentPostsLoadJS' ) ) {
 //add JS and CSS - backend
 if ( ! function_exists( 'wpctDragAndDropRecentPostsBackendCssJs' ) ) {
 	function wpctDragAndDropRecentPostsBackendCssJs(){
+	    /*wp_enqueue_script( 'bootstrap', plugin_dir_url( __FILE__ ) . 'assets/js/bootstrap.min.js', array('jquery'), '4.4.0', true );
+	    wp_register_script( 'select2', plugin_dir_url( __FILE__ ) . 'assets/js/select2.min.js', array('jquery'), '1.0', false );
+	    wp_enqueue_script('select2');
+		wp_register_script( 'wpct-drag-drop-recent-posts-backend-webfontloader', plugin_dir_url( __FILE__ ) . 'assets/js/webfontloader.js', array('jquery'), '1.0', false );
+		wp_enqueue_script('wpct-drag-drop-recent-posts-backend-webfontloader');
+		wp_register_script( 'wpct-drag-drop-recent-posts-backend-google-fonts', plugin_dir_url( __FILE__ ) . 'assets/js/google.fonts.js', array('jquery'), '1.0', false );
+		wp_enqueue_script('wpct-drag-drop-recent-posts-backend-google-fonts');*/
 		wp_enqueue_script('jquery-ui-sortable');
 		wp_register_script( 'wpct-drag-drop-recent-posts-backend', plugin_dir_url( __FILE__ ) . 'assets/js/wpct-drag-drop-recent-posts-backend.js', array('jquery'), '1.0', false );
 		wp_enqueue_script('wpct-drag-drop-recent-posts-backend');
