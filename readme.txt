@@ -1,9 +1,9 @@
 === WPCT Drag & Drop Recent Posts ===
-Contributors: WPCT
+Contributors: wpcodetips
 Tags: category posts, latest posts, posts widget, latest posts widget, posts slider
 Requires at least: 5.0
-Tested up to: 5.3 
-Stable tag: 1.2
+Tested up to: 5.3
+Stable tag: 1.20
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,11 +62,15 @@ Please check out our <strong><a href="https://demo.wp-code-tips.com/wpct-drag-dr
 
 == Changelog ==
 
-= 1.2 =
+= 1.20 =
 * Added option to disable Font Awesome
 * Added option to disable Animate CSS
 * Added option to choose Animate CSS effect
 * Added themes
+
+= 1.11 =
+* Fixed author of the plugin
+* Fixed CSS layout after disabling option 'Post type taxonomies'
 
 = 1.1 =
 * Changed displaying post type taxonomies (inline)

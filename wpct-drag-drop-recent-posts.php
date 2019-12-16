@@ -5,17 +5,21 @@
  * Plugin URI: https://wp-code-tips.com/
  * Author: wp-code-tips.com
  * Author URI: https://wp-code-tips.com/contact/
- * Version: 1.2
+ * Version: 1.20
  * Text Domain: wpct-drag-drop-recent-posts
  * Domain Path: /languages/
  * License: GPLv2 or later
  */
 
 // TODO:
-// theme 3
 // posts counter
 // first image featured - full width
 // Google Fonts select
+
+// ensure is_plugin_active() exists (not on frontend)
+if( !function_exists('is_plugin_active') ) {
+    include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+}
 
 // excerpt limit 
 if ( ! function_exists( 'wpctDragAndDropRecentPostsExcerpt' ) ) {
@@ -84,7 +88,13 @@ if(!class_exists('WPCTrecentPosts')){
 		
         public function widget($args,  $setup){
 
-			$is_pro = true;
+            // check if Pro features should be enabled   
+            if ( is_plugin_active( 'wpct-drag-drop-recent-posts-pro/wpct-drag-drop-recent-posts-pro.php' ) ) {
+                $is_pro = true;
+            } else{
+                $is_pro = false;
+            }
+			
 			$is_pro_class = 'wpct-free';
 			if($is_pro){
 				$is_pro_class = 'wpct-pro';
@@ -188,7 +198,7 @@ if(!class_exists('WPCTrecentPosts')){
 				$load_animate = $setup['load_animate'];
 			}
 			$animate_css_effect = 'fadeInUp';
-			if(isset($setup['animate_css_effect'])){
+			if(isset($setup['animate_css_effect']) && $is_pro){
 				$animate_css_effect = $setup['animate_css_effect'];
 			}
 			
@@ -572,6 +582,13 @@ if(!class_exists('WPCTrecentPosts')){
         //Admin Form
         public function form($setup)
         {
+            // check if Pro features should be enabled   
+            if ( is_plugin_active( 'wpct-drag-drop-recent-posts-pro/wpct-drag-drop-recent-posts-pro.php' ) ) {
+                $is_pro = true;
+            } else{
+                $is_pro = false;
+            }
+            
             $setup = wp_parse_args( (array) $setup, array('title' => __('MISC Posts', 'wpct-drag-drop-recent-posts'),
             	'title_show' => '1',
             	'title_linkable' => '1',
@@ -639,10 +656,11 @@ if(!class_exists('WPCTrecentPosts')){
             ?>
 			<p id="wpct-sortable-console"><?php echo $elements_order; ?></p>
 
-            <p>
-                <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'wpct-drag-drop-recent-posts'); ?></label>
+			<p>
+			    <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'wpct-drag-drop-recent-posts'); ?></label>
                 <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title_widget; ?>" />
             </p>
+
             <p>
                 <label for="<?php echo $this->get_field_id('post_type'); ?>"><?php _e('Post Type', 'wpct-drag-drop-recent-posts'); ?></label>
                 <input class="widefat" id="<?php echo $this->get_field_id('post_type'); ?>" name="<?php echo $this->get_field_name('post_type'); ?>" type="text" value="<?php echo $post_type; ?>" />
@@ -864,7 +882,7 @@ if(!class_exists('WPCTrecentPosts')){
 			</ul>
             <p>
                 <label for="<?php echo $this->get_field_id('theme'); ?>"><?php _e('Theme', 'wpct-drag-drop-recent-posts'); ?></label>
-                <select name="<?php echo $this->get_field_name('theme'); ?>" id="<?php echo $this->get_field_id('theme'); ?>">
+                <select <?php if(!$is_pro){ echo 'disabled'; }?> name="<?php echo $this->get_field_name('theme'); ?>" id="<?php echo $this->get_field_id('theme'); ?>">
                     <option value="0"<?php selected( $setup['theme'], '0' ); ?>><?php _e('Default styles', 'wpct-drag-drop-recent-posts'); ?></option>
                     <option value="1"<?php selected( $setup['theme'], '1' ); ?>><?php _e('Theme 1', 'wpct-drag-drop-recent-posts'); ?></option>
                     <option value="2"<?php selected( $setup['theme'], '2' ); ?>><?php _e('Theme 2', 'wpct-drag-drop-recent-posts'); ?></option>
@@ -873,21 +891,21 @@ if(!class_exists('WPCTrecentPosts')){
             </p>
             <p>
                 <label for="<?php echo $this->get_field_id('load_fa'); ?>"><?php _e('Load Font Awesome 5', 'wpct-drag-drop-recent-posts'); ?></label>
-                <select name="<?php echo $this->get_field_name('load_fa'); ?>" id="<?php echo $this->get_field_id('load_fa'); ?>">
+                <select <?php if(!$is_pro){ echo 'disabled'; }?> name="<?php echo $this->get_field_name('load_fa'); ?>" id="<?php echo $this->get_field_id('load_fa'); ?>">
                     <option value="0"<?php selected( $setup['load_fa'], '0' ); ?>><?php _e('No', 'wpct-drag-drop-recent-posts'); ?></option>
                     <option value="1"<?php selected( $setup['load_fa'], '1' ); ?>><?php _e('Yes', 'wpct-drag-drop-recent-posts'); ?></option>
                 </select>
             </p>
             <p>
                 <label for="<?php echo $this->get_field_id('load_animate'); ?>"><?php _e('Load Animate CSS', 'wpct-drag-drop-recent-posts'); ?></label>
-                <select name="<?php echo $this->get_field_name('load_animate'); ?>" id="<?php echo $this->get_field_id('load_animate'); ?>">
+                <select <?php if(!$is_pro){ echo 'disabled'; }?> name="<?php echo $this->get_field_name('load_animate'); ?>" id="<?php echo $this->get_field_id('load_animate'); ?>">
                     <option value="0"<?php selected( $setup['load_animate'], '0' ); ?>><?php _e('No', 'wpct-drag-drop-recent-posts'); ?></option>
                     <option value="1"<?php selected( $setup['load_animate'], '1' ); ?>><?php _e('Yes', 'wpct-drag-drop-recent-posts'); ?></option>
                 </select>
             </p>
             <p>
                 <label for="<?php echo $this->get_field_id('animate_css_effect'); ?>"><?php _e('Animate CSS Effect', 'wpct-drag-drop-recent-posts'); ?></label>
-                <select name="<?php echo $this->get_field_name('animate_css_effect'); ?>" id="<?php echo $this->get_field_id('animate_css_effect'); ?>">
+                <select <?php if(!$is_pro){ echo 'disabled'; }?> name="<?php echo $this->get_field_name('animate_css_effect'); ?>" id="<?php echo $this->get_field_id('animate_css_effect'); ?>">
                     <option value="bounce"<?php selected( $setup['animate_css_effect'], 'bounce' ); ?>><?php _e('bounce', 'wpct-drag-drop-recent-posts'); ?></option>
                     <option value="flash"<?php selected( $setup['animate_css_effect'], 'flash' ); ?>><?php _e('flash', 'wpct-drag-drop-recent-posts'); ?></option>
                     <option value="pulse"<?php selected( $setup['animate_css_effect'], 'pulse' ); ?>><?php _e('pulse', 'wpct-drag-drop-recent-posts'); ?></option>
@@ -1044,13 +1062,6 @@ if ( ! function_exists( 'wpctDragAndDropRecentPostsLoadJS' ) ) {
 //add JS and CSS - backend
 if ( ! function_exists( 'wpctDragAndDropRecentPostsBackendCssJs' ) ) {
 	function wpctDragAndDropRecentPostsBackendCssJs(){
-	    /*wp_enqueue_script( 'bootstrap', plugin_dir_url( __FILE__ ) . 'assets/js/bootstrap.min.js', array('jquery'), '4.4.0', true );
-	    wp_register_script( 'select2', plugin_dir_url( __FILE__ ) . 'assets/js/select2.min.js', array('jquery'), '1.0', false );
-	    wp_enqueue_script('select2');
-		wp_register_script( 'wpct-drag-drop-recent-posts-backend-webfontloader', plugin_dir_url( __FILE__ ) . 'assets/js/webfontloader.js', array('jquery'), '1.0', false );
-		wp_enqueue_script('wpct-drag-drop-recent-posts-backend-webfontloader');
-		wp_register_script( 'wpct-drag-drop-recent-posts-backend-google-fonts', plugin_dir_url( __FILE__ ) . 'assets/js/google.fonts.js', array('jquery'), '1.0', false );
-		wp_enqueue_script('wpct-drag-drop-recent-posts-backend-google-fonts');*/
 		wp_enqueue_script('jquery-ui-sortable');
 		wp_register_script( 'wpct-drag-drop-recent-posts-backend', plugin_dir_url( __FILE__ ) . 'assets/js/wpct-drag-drop-recent-posts-backend.js', array('jquery'), '1.0', false );
 		wp_enqueue_script('wpct-drag-drop-recent-posts-backend');
